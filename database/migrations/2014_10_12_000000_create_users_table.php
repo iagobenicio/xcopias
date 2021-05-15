@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('type');
             $table->integer('copiasmes');
-            $table->integer('copiasrestante')
+            $table->integer('copiasrestante');
             $table->rememberToken();
             $table->timestamps();
         });
