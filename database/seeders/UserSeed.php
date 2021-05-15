@@ -20,6 +20,8 @@ class UserSeed extends Seeder
             "user"=>"xadmincopiasif",
             "password"=>bcrypt("x.if@43445656"),
             "type"=>1,
+            "copiasmes"=>0,
+            "copiasrestante"=>0,
         ];
         User::create($data);
     }
