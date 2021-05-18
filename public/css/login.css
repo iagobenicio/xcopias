@@ -7,73 +7,24 @@ html,body{
     justify-content: center;
 }
 .contents{
-    height: 80%;
+    height: 50%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
     width: 90%;
-
 }
-.inputuser, .inputpassword{
-    width: 40%;
+.mb-3{
+    width: 30%;
 }
-#inptusername, #inptuserpass{
+#exampleInputUsername,#exampleInputPassword{
     width: 100%;
-    height: 4vh;
+    height: 60%;
 }
-#title{
-    font-size: 3vw;
+#exampleInputUsername:focus,#exampleInputPassword:focus{
+    width: 100%;
+    height: 60%;
+    box-shadow: none;
+    border-color: #3a6475;
 }
-#btn{
-    color: white;
-    font-size: 1vw;
-    background-color: #536A74;
-    border-style: none;
-    width: 15%;
-    height: 3vh;
-}
-#btn:hover{
-    opacity: 0.8;
-}
-#spaninp{
-    align-self: flex-start; 
-    font-size: 1.2vw;
-}
-@media screen and (max-width: 800px) {
-    #title{
-        font-size: 6vw;
-    }
-    #btn{
-        color: white;
-        font-size: 2vw;
-        background-color: #536A74;
-        border-style: none;
-        width: 15%;
-        height: 3vh;
-    }
-    #spaninp{
-        align-self: flex-start; 
-        font-size: 2vw;
-    }
-@media screen and (max-width: 500px) {
-    .inputuser, .inputpassword{
-        width: 100%;
-    }
-    #title{
-        font-size: 8vw;
-    }
-    #btn{
-        color: white;
-        font-size: 4vw;
-        background-color: #536A74;
-        border-style: none;
-        width: 50%;
-        height: 4vh;
-    }
-    #spaninp{
-        align-self: flex-start; 
-        font-size: 4vw;
-    }
-}
-}
+

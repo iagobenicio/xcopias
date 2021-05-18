@@ -4,451 +4,396 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{asset('css/painel.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" type="text/css">
+    <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{asset('css/painel.css')}}">
     <title>Painel</title>
 </head>
 <body>
-    <nav class="navbar">
-        <span id="span">X-Cópias</span>
-        <a id="logout" href="/logout">sair</a>
-    </nav>
-    <span id="span" style="color: black;">Bem-vindo {{Auth::user()->name}}</span>
-    <div class="actionsedit">
-        <button id="btnedit" onclick="editar()">EDITAR</button>
-        <button id="btneditpass" onclick="editarpass()">EDITAR SENHA</button>
-    </div>
-    <div class="topactions">
-        <button onclick="cadastrar()" id="btn">novo usuário</button>
-        <span id="userlist">usuários:</span>
-    </div>
-    @foreach($usuarios as $user)
-    <div class="userinfos">
-        <div class="divusertop">
-            <span id="textdivusertop">{{$user->name}}</span>
+   
+    <nav class="navbar navbar-expand-lg navbar navbar-light" style="background-color: #3a6475;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="color: white;">X-Cópias</a>
+            
+            <button style="background-color: white;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse"  id="navbarSupportedContent">
+            <div>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white;">inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: white;">perfil</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonexit">
+                <a href="/logout"><button  class="btn btn-outline-light" type="submit">sair</button></a>
+            </div>
+            </div>
         </div>
-        <div class="divuserinfo">
-            <span id="textdivuserinfo">cópias mensal: {{$user->copiasmes}}</span>
-            <span id="textdivuserinfo">cópias restante: {{$user->copiasrestante}}</span>
+    </nav>    
+    <div class="container">
+        <div class="row">
+            <div>
+                <button onclick="cadastrar()" type="button" class="btn btn-secondary" style="background-color: #3a6475;">novo professor</button>
+                <button onclick="getrelatorio()"type="button" class="btn btn-secondary" style="background-color: #3a6475;">ver relatório</button>
+            </div>
         </div>
-    </div>
-    <div class="actions">
-        <button onclick="retirarcopias({{$user->id}})" id="btngerenreti" style="color: white;">retirar</button>
-        <button onclick="retornarcopias({{$user->id}})"id="btngerenreto" style="color: white;">retornar</button>
-        <button onclick="renovarcopias({{$user->id}})" id="btngerenreno" style="color: white;">renovar</button>
-    </div>
-    @endforeach
-    <div id="myModal" class="modal">
-
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form class="contents" method="POST" action="">
-             
-                <span id="spantop">cadastro de professores</span>
-                
-                <div class="labelinpt">
-                    <label id="spaninp">nome</label>
-                    <input id="inptuser" type="text" placeholder="professor..." name="nomecad"/>
+        <div class="row" style="margin-top: 20px;">
+            @foreach($usuarios as $user)
+            <div class="col">
+                <div class="userinfos">
+                    <span style="font-family: sans-serif; font-size: 18px;">Professor</span>
+                    <span style="font-family: sans-serif; font-size: 16px;">{{$user->name}}</span>
                 </div>
-                <div class="labelinpt">
-                    <label id="spaninp">usuário</label>
-                    <input id="inptuser" type="text" placeholder="usuario..." name="usernamecad"/>
+                <div class="copiasinfo">
+                    <span >Cópias mensal: <span style="color: #0b6a8d;">{{$user->copiasmes}}</span></span>
+                    <span>Cópias restante: <span style="color: #0b6a8d;">{{$user->copiasrestante}}</span></span>
                 </div>
-                <div class="labelinpt">
-                    <label id="spaninp">senha</label>
-                    <input id="inptuser" type="password" placeholder="senha..." name="passcad"/>
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button type="button" onclick="retirarcopias({{$user->id}})" class="btn btn-outline-dark" >retirar</button>
+                    <button type="button" onclick="retornarcopias({{$user->id}})" class="btn btn-outline-dark">retornar</button>
+                    <button type="button" onclick="renovarcopias({{$user->id}})" class="btn btn-outline-dark">renovar</button>
                 </div>
-                <span id="msgcdprof"></span>
-                <input id="btnformmodal" type="button" onclick="sendcduser()" value="CADASTRAR"/>
-          </form>
+            </div>
+            @endforeach
         </div>
     </div>
 
-    <div id="myModalretirar" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form class="contents">
-                <input type="hidden" id="rtid" name="idrt" value="">
-                <span id="spantop">retirar</span>
-                <span style="font-size: 1.5vw;">Escolha uma quantidade de cópias para serem retiradas deste determinado professor. </span>
-                <div class="labelinpt">
-                    <label id="spaninp">quantidade</label>
-                    <input id="inptuser" type="number" name="quantrt" placeholder="EX:5" />
-                </div>
-                <span id="msgreti"></span>
-                <input id="btnformmodal" type="button" onclick="sendretirar()" value="RETIRAR">
-          </form>
-        </div>
-    </div>
-    <div id="myModalretornar" class="modal">
-
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form class="contents">
-            <input type="hidden" id="rtoid" name="idrto" value="">
-                <span id="spantop">retornar</span>
-                <span style="font-size: 1.5vw;">Escolha uma quantidade para ser reotornada à quantidade restante deste determinado professor</span>
-                <div class="labelinpt">
-                    <label id="spaninp">quantidade</label>
-                    <input id="inptuser" type="number" name="quantrto" placeholder="EX:5" />
-                </div>
-                <span id="msgreto"></span>
-                <input id="btnformmodal" type="button" onclick="sendretornar()" value="RETORNAR">
-          </form>
-        </div>
-    </div>
-    <div id="myModalrenovar" class="modal">
-
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form class="contents">
-                <input type="hidden" id="rnid" name="idrn" value="">
-                <span id="spantop">renovar</span>
-                <span style="font-size: 1.5vw;">Escolha uma nova quantidade de cópias mensal para este determinado professor</span>
-                <div class="labelinpt">
-                    <label id="spaninp">quantidade</label>
-                    <input id="inptuser" type="number" name="quantrn" placeholder="EX:5" />
-                </div>
-                <span id="msgreno"></span>
-                <input id="btnformmodal" type="button" onclick="sendrenovar()" value="RENOVAR">
-          </form>
-        </div>
-    </div>
-
-
-
-    <div id="myModaledit" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form class="contents" action="">
-                    <span id="spantop">EDITAR INFORMAÇÕES DO ADMINISTRADOR</span>
-                    <div class="labelinpt">
-                        <label id="spaninp">nome</label>
-                        <input id="inptuser" type="text"  name="nomecadedit"/>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalcaduser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastro de professores</h5>
+                <button id="modalClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">nome</label>
+                        <input type="text" class="form-control" id="recipient-name" placeholder="nome do novo professor...">
                     </div>
-                    <div class="labelinpt">
-                        <label id="spaninp">usuário</label>
-                        <input id="inptuser" type="text"  name="usernamecadedit"/>
+                    <div class="form-group">
+                        <label for="recipient-username" class="col-form-label">usuário:</label>
+                        <input type="text" class="form-control" id="recipient-username" placeholder="usuário...">
                     </div>
-                    <span id="msgedit"></span>
-                    <input id="btnformmodal" type="button" onclick="sendedituser()" value="EDITAR"/>
-            </form>
+                    <div class="form-group">
+                        <label for="recipient-password" class="col-form-label">senha:</label>
+                        <input type="password" class="form-control" id="recipient-password" placeholder="senha...">
+                    </div>
+                </form>
+                <div style="display: flex; justify-content: center;">
+                    <span style="color: red; display: none;"></span>
+                    <span style="color: green; display: none;"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" style="background-color: #3a6475;">cadastrar</button>
+            </div>
+            </div>
         </div>
     </div>
 
-    <div id="myModalpass" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form class="contents" action="">
-                    <span id="spantop">EDITAR SENHA DO ADMINISTRADOR</span>
-                    <div class="labelinpt">
-                        <label id="spaninp">senha atual</label>
-                        <input id="inptuser" type="password" placeholder="senha..." name="passcadedit"/>
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Relatório</h5>
+                <button id="modalCloserela" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container" style="margin-top: 5%;">
+                    <div class="row">
+                        <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                        <div class="row" style="margin-left: 5%;">
+                            <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;"> Retirada de cópias </span></span>
+                            <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
+                            <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">14</span></span>
+                        </div>
                     </div>
-                    <div class="labelinpt">
-                        <label id="spaninp">nova senha</label>
-                        <input id="inptuser" type="password" placeholder="senha..." name="newpasscadedit"/>
+                    <hr>
+                    <div class="row">
+                    <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                    <div class="row" style="margin-left: 5%;">
+                        <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retornada de cópias </span></span>
+                        <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
+                        <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">4</span></span>
                     </div>
-                    <span id="msgeditpass"></span>
-                    <input id="btnformmodal" type="button" onclick="sendedituserpass()" value="EDITAR"/>
-            </form>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                    <div class="row" style="margin-left: 5%;">
+                        <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Renovação de cópias</span></span>
+                        <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
+                        <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">20</span></span>
+                    </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModalreti" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Retirar cópias</h5>
+                <button id="modalClosereti" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="rtid" name="idrt" value="">
+                    <div class="form-group">
+                        <label for="recipient-reti" class="col-form-label">quantidade</label>
+                        <input type="number" class="form-control" name="quantrt" id="recipient-reti">
+                    </div>
+                </form>
+                <div style="display: flex; justify-content: center;">
+                    <span id="msgreti" style="color: red;"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="sendretirar()" class="btn btn-secondary" style="background-color: #3a6475;">salvar</button>
+            </div>
+            </div>
+        </div>
+    </div>
 
-    <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
+    <div class="modal fade" id="exampleModalreto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Retornar cópias</h5>
+                <button id="modalClosereto" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="rtoid" name="idrto" value="">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-reto" class="col-form-label">quantidade</label>
+                        <input type="number" class="form-control" name="quantrto" id="recipient-reto">
+                    </div>
+                </form>
+                <div style="display: flex; justify-content: center;">
+                    <span id="msgreto" style="color: red;"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="sendretornar()" class="btn btn-secondary" style="background-color: #3a6475;">salvar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalreno" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Renovar cópias</h5>
+                <button id="modalClosereno" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <input type="hidden" id="rnid" name="idrn" value="">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-reno" class="col-form-label">quantidade</label>
+                        <input type="number" class="form-control" name="quantrn" id="recipient-reno">
+                    </div>
+                </form>
+                <div style="display: flex; justify-content: center;">
+                    <span id="msgreno" style="color: red;"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="sendrenovar()" class="btn btn-secondary" style="background-color: #3a6475;">salvar</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <script>
-        
+    
         function cadastrar(){
-            var modal = document.getElementById("myModal");
-            modal.style.display = "block";
-
-            var closebtn = document.getElementsByClassName("close")[0];
-
-            closebtn.onclick = function(){
-                document.getElementById("msgcdprof").innerText = "";
-                modal.style.display = "none";
-            }
+            $('#exampleModalcaduser').modal('show')
+            $(function () {
+                $('#modalClose').on('click', function () {
+                    $('#exampleModalcaduser').modal('hide');
+                })
+            })
+        }
+        function getrelatorio(){
+        
+        $('#exampleModalLong').modal('show')
+            $(function () {
+                $('#modalCloserela').on('click', function () {
+                    $('#exampleModalLong').modal('hide');
+                })
+            })
         }
 
         function retirarcopias(id){
-            
             document.getElementById('rtid').value = id;
-            var modalret = document.getElementById("myModalretirar");
-            modalret.style.display = "block";
-
-            var closebtn = document.getElementsByClassName("close")[1];
-
-            closebtn.onclick = function(){
-                document.getElementById("msgreti").innerText = "";
-                modalret.style.display = "none";
-            }
-
+            $('#exampleModalreti').modal('show')
+            $(function () {
+                $('#modalClosereti').on('click', function () {
+                    $('#exampleModalreti').modal('hide');
+                })
+            })
         }
 
         function retornarcopias(id){
-            
             document.getElementById('rtoid').value = id;
-            var modalreto = document.getElementById("myModalretornar");
-            modalreto.style.display = "block";
-
-            var closebtn = document.getElementsByClassName("close")[2];
-
-            closebtn.onclick = function(){
-                document.getElementById("msgreto").innerText = "";
-                modalreto.style.display = "none";
-            }
-
+            $('#exampleModalreto').modal('show')
+            $(function () {
+                $('#modalClosereto').on('click', function () {
+                    $('#exampleModalreto').modal('hide');
+                })
+            })
         }
         function renovarcopias(id){
-            
             document.getElementById('rnid').value = id;
-            var modalreno = document.getElementById("myModalrenovar");
-            modalreno.style.display = "block";
-
-            var closebtn = document.getElementsByClassName("close")[3];
-
-            closebtn.onclick = function(){
-                document.getElementById("msgreno").innerText = "";
-                modalreno.style.display = "none";
-            }
-
+            $('#exampleModalreno').modal('show')
+            $(function () {
+                $('#modalClosereno').on('click', function () {
+                    $('#exampleModalreno').modal('hide');
+                })
+            })
         }
+    
 
-        function editar(){
-            var modal = document.getElementById("myModaledit");
-            modal.style.display = "block";
-
-            var closebtn = document.getElementsByClassName("close")[4];
-
-            closebtn.onclick = function(){
-                document.getElementById("msgedit").innerText = "";
-                modal.style.display = "none";
-            }
-        }
-        function editarpass(){
-            var modal = document.getElementById("myModalpass");
-            modal.style.display = "block";
-
-            var closebtn = document.getElementsByClassName("close")[5];
-
-            closebtn.onclick = function(){
-                document.getElementById("msgeditpass").innerText = "";
-                modal.style.display = "none";
-            }
-        }
-
-        window.onclick = function(){
-            if (event.target == document.getElementById("myModalretirar")) {
-                document.getElementById("msgreti").innerText = "";
-                document.getElementById("myModalretirar").style.display = "none";
-            }else{
-                if(event.target == document.getElementById("myModalretornar")){
-                    document.getElementById("msgreto").innerText = "";
-                    document.getElementById('myModalretornar').style.display = "none";
-                }else{
-                    if(event.target == document.getElementById("myModalrenovar")){
-                        document.getElementById("msgreno").innerText = "";
-                        document.getElementById("myModalrenovar").style.display = "none";
-                    }else{
-                        if(event.target == document.getElementById("myModaledit")){
-                            document.getElementById("msgedit").innerText = "";
-                            document.getElementById("myModaledit").style.display = "none";
-                        }else{
-                            if(event.target == document.getElementById("myModalpass")){
-                                document.getElementById("msgeditpass").innerText = "";
-                                document.getElementById("myModalpass").style.display = "none";
-                            }else{
-                                if(event.target == document.getElementById("myModal")){
-                                    document.getElementById("msgcdprof").innerText = "";
-                                    document.getElementById("myModal").style.display = "none";
-                                }
-                            }
-                        }
-                    }
+        function sendcduser(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
+            });
+            data = {
+                nome: $("input[name=nomecad]").val(),
+                username: $("input[name=usernamecad]").val(),
+                pass: $("input[name=passcad]").val()
+            },
+            $.ajax({
+                type: "POST",
+                url: "{{route('cduser')}}",
+                data: data,
+                success: function(response) {
+                    if(response["msgnotok"]){
+                        document.getElementById("msgcdprof").style.color = "red";
+                        document.getElementById("msgcdprof").innerText = response["msgnotok"];
+                    }
+                    else{
+                        document.getElementById("msgcdprof").style.color = "green";
+                        document.getElementById("msgcdprof").innerText = "professor cadastrado";
+                    }
+                },
+                error: (e) => {
+                    alert('Erro no processo');
+                },
+            });
         }
-        
 
-            function sendcduser(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+
+        function sendretirar(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            data = {
+                id: $("input[name=idrt]").val(),
+                quantidade: $("input[name=quantrt]").val()
+            },
+            $.ajax({
+                type: "POST",
+                url: "{{route('rtcopias')}}",
+                data: data,
+                success: function(response) {
+                    if(response['msgnotok']){
+                        document.getElementById("msgreti").innerText = response["msgnotok"];
+                    }else{
+                        window.location.href = "{{route('padm')}}"
                     }
-                });
-                data = {
-                    nome: $("input[name=nomecad]").val(),
-                    username: $("input[name=usernamecad]").val(),
-                    pass: $("input[name=passcad]").val()
                 },
-                $.ajax({
-                    type: "POST",
-                    url: "{{route('cduser')}}",
-                    data: data,
-                    success: function(response) {
-                        if(response["msgnotok"]){
-                            document.getElementById("msgcdprof").style.color = "red";
-                            document.getElementById("msgcdprof").innerText = response["msgnotok"];
-                        }
-                        else{
-                            document.getElementById("msgcdprof").style.color = "green";
-                            document.getElementById("msgcdprof").innerText = "professor cadastrado";
-                        }
-                    },
-                    error: (e) => {
-                        alert('Erro no processo');
-                    },
-                });
-            }
+                error: (e) => {
+                    alert('Erro no processo');
+                },
+            });
+        }
 
-
-
-            function sendretirar(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        function sendretornar(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            data = {
+                id: $("input[name=idrto]").val(),
+                quantidade: $("input[name=quantrto]").val()
+            },
+            $.ajax({
+                type: "POST",
+                url: "{{route('rtocopias')}}",
+                data: data,
+                success: function(response) {
+                    if(response['msgnotok']){
+                        document.getElementById("msgreto").innerText = response["msgnotok"];
+                    }else{
+                        window.location.href = "{{route('padm')}}"
                     }
-                });
-                data = {
-                    id: $("input[name=idrt]").val(),
-                    quantidade: $("input[name=quantrt]").val()
                 },
-                $.ajax({
-                    type: "POST",
-                    url: "{{route('rtcopias')}}",
-                    data: data,
-                    success: function(response) {
-                        if(response['msgnotok']){
-                            document.getElementById("msgreti").style.color = "red";
-                            document.getElementById("msgreti").innerText = response["msgnotok"];
-                        }else{
-                            window.location.href = "{{route('padm')}}"
-                        }
-                    },
-                    error: (e) => {
-                        alert('Erro no processo');
-                    },
-                });
-            }
+                error: (e) => {
+                    alert('Erro no processo');
+                },
+            });
+        }
 
-            function sendretornar(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        function sendrenovar(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            data = {
+                id: $("input[name=idrn]").val(),
+                quantidade: $("input[name=quantrn]").val()
+            },
+            $.ajax({
+                type: "POST",
+                url: "{{route('rncopias')}}",
+                data: data,
+                success: function(response) {
+                    if(response['msgnotok']){
+                        document.getElementById("msgreno").innerText = response["msgnotok"];
+                    }else{
+                        window.location.href = "{{route('padm')}}"
                     }
-                });
-                data = {
-                    id: $("input[name=idrto]").val(),
-                    quantidade: $("input[name=quantrto]").val()
                 },
-                $.ajax({
-                    type: "POST",
-                    url: "{{route('rtocopias')}}",
-                    data: data,
-                    success: function(response) {
-                        if(response['msgnotok']){
-                            document.getElementById("msgreto").style.color = "red";
-                            document.getElementById("msgreto").innerText = response["msgnotok"];
-                        }else{
-                            window.location.href = "{{route('padm')}}"
-                        }
-                    },
-                    error: (e) => {
-                        alert('Erro no processo');
-                    },
-                });
-            }
-
-            function sendrenovar(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                data = {
-                    id: $("input[name=idrn]").val(),
-                    quantidade: $("input[name=quantrn]").val()
+                error: (e) => {
+                    alert('Erro no processo');
                 },
-                $.ajax({
-                    type: "POST",
-                    url: "{{route('rncopias')}}",
-                    data: data,
-                    success: function(response) {
-                        if(response['msgnotok']){
-                            document.getElementById("msgreno").style.color = "red";
-                            document.getElementById("msgreno").innerText = response["msgnotok"];
-                        }else{
-                            window.location.href = "{{route('padm')}}"
-                        }
-                    },
-                    error: (e) => {
-                        alert('Erro no processo');
-                    },
-                });
-            }
-            function sendedituser(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                data = {
-                    nome: $("input[name=nomecadedit]").val(),
-                    username: $("input[name=usernamecadedit]").val()
-                },
-                $.ajax({
-                    type: "POST",
-                    url: "{{route('userinfo')}}",
-                    data: data,
-                    success: function(response) {
-                        if(response["msgnotok"]){
-                            document.getElementById("msgedit").style.color = "red";
-                            document.getElementById("msgedit").innerText = response["msgnotok"];
-                        }
-                        else{
-                            document.getElementById("msgedit").style.color = "green";
-                            document.getElementById("msgedit").innerText = "dados alterados";
-                        }
-                    },
-                    error: (e) => {
-                        alert('Erro no processo');
-                    },
-                });
-            }
-            
-            
-            function sendedituserpass(){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                data = {
-                    pass: $("input[name=passcadedit]").val(),
-                    newpass: $("input[name=newpasscadedit]").val()
-                },
-                $.ajax({
-                    type: "POST",
-                    url: "{{route('userpass')}}",
-                    data: data,
-                    success: function(response) {
-                        if(response["msgnotok"]){
-                            document.getElementById("msgeditpass").style.color = "red";
-                            document.getElementById("msgeditpass").innerText = response["msgnotok"];
-                        }
-                        else{
-                            document.getElementById("msgeditpass").style.color = "green";
-                            document.getElementById("msgeditpass").innerText = "senha alterada";
-                        }
-                    },
-                    error: (e) => {
-                        alert('Erro no processo');
-                    },
-                });
-            }
-
-
+            });
+        }
     </script>
 </body>
 </html>
