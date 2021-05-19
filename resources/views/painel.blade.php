@@ -81,24 +81,23 @@
                 <form>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">nome</label>
-                        <input type="text" class="form-control" id="recipient-name" placeholder="nome do novo professor...">
+                        <input type="text" class="form-control" name="nomecad" id="recipient-name" placeholder="nome do novo professor...">
                     </div>
                     <div class="form-group">
                         <label for="recipient-username" class="col-form-label">usuário:</label>
-                        <input type="text" class="form-control" id="recipient-username" placeholder="usuário...">
+                        <input type="text" class="form-control" name="usernamecad" id="recipient-username" placeholder="usuário...">
                     </div>
                     <div class="form-group">
                         <label for="recipient-password" class="col-form-label">senha:</label>
-                        <input type="password" class="form-control" id="recipient-password" placeholder="senha...">
+                        <input type="password" class="form-control" name="passcad" id="recipient-password" placeholder="senha...">
                     </div>
                 </form>
                 <div style="display: flex; justify-content: center;">
-                    <span style="color: red; display: none;"></span>
-                    <span style="color: green; display: none;"></span>
+                    <span id="msgcdprof" style="display: none;"></span>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" style="background-color: #3a6475;">cadastrar</button>
+                <button type="button" onclick="sendcduser()" class="btn btn-secondary" style="background-color: #3a6475;">cadastrar</button>
             </div>
             </div>
         </div>
@@ -299,10 +298,12 @@
                 success: function(response) {
                     if(response["msgnotok"]){
                         document.getElementById("msgcdprof").style.color = "red";
+                        document.getElementById("msgcdprof").style.display = 'block';
                         document.getElementById("msgcdprof").innerText = response["msgnotok"];
                     }
                     else{
                         document.getElementById("msgcdprof").style.color = "green";
+                        document.getElementById("msgcdprof").style.display = 'block';
                         document.getElementById("msgcdprof").innerText = "professor cadastrado";
                     }
                 },
