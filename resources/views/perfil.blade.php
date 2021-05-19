@@ -62,9 +62,9 @@
                       <input type="text" name="usernameedit" class="form-control" id="exampleInputUsername" placeholder="novo nome de usuário...">
                     </div>
                     <div style="display: flex; justify-content: center;"> 
-                      <span id="msgedituser" style="display: none;"></span>
+                      <span id="msgedituser"></span>
                     </div>
-                    <button  id="idsubmit" class="btn btn-primary">alterar</button>
+                    <button type="button" onclick="sendedituser()" id="idsubmit" class="btn btn-primary">alterar</button>
                   </form>
             </div>
             <hr style="margin-top: 10px;">
@@ -80,9 +80,9 @@
                       <input type="text" name="newuserpass" class="form-control" id="exampleInputUsername" placeholder="novo senha...">
                     </div>
                     <div style="display: flex; justify-content: center;">
-                      <span id="msgedituserpass" style="display: none;"></span>
+                      <span id="msgedituserpass"></span>
                     </div>
-                    <button  id="idsubmit" class="btn btn-primary">alterar</button>
+                    <button type="button" onclick="sendeditpass()" id="idsubmit" class="btn btn-primary">alterar</button>
                   </form>
             </div>
         </div>
@@ -105,12 +105,12 @@
                 success: function(response) {
                     if(response["msgnotok"]){
                         document.getElementById("msgedituser").style.color = "red";
-                        document.getElementById("msgedituser").style.display = 'block';
+                        document.getElementById("msgedituser").style.display = "block";
                         document.getElementById("msgedituser").innerText = response["msgnotok"];
                     }
                     else{
                         document.getElementById("msgedituser").style.color = "green";
-                        document.getElementById("msgedituser").style.display = 'block';
+                        document.getElementById("msgedituser").style.display = "block";      
                         document.getElementById("msgedituser").innerText = "alterações salvas";
                     }
                 },
