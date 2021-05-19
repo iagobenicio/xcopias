@@ -3,147 +3,21 @@ html, body{
     height: 100%;
     margin: 0;
 }
-.navbar{
-    display: flex;
-    flex-direction: row;
-    background-color: #536A74;
-    height: 6%;
-    align-items: center;
-    justify-content: space-between;
+.buttonexit{
+    display: flex; 
+    flex: 2; 
+    justify-content: flex-end;
 }
-.contents{
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
+.containerRelatorio{
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #3a6475;
+    overflow-y: scroll;
+    padding-left: 10px;
+    height: 300px;
 }
-.dadosinfo{
-    display: flex;
-    flex-direction: column;
-}
-.copiasinfo{
-    display: flex;
-    flex-direction: column;
-}
-.contentsedit{
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    height: 80%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-}
-#btnedit{
-    width: 6%;
-    height: 5%;
-    margin-left: 5px;
-    font-size: 1vw;
-    justify-content: center;
-    background-color: #536A74;
-    color: white;
-    outline: none;
-    text-decoration: none;
-    border-style: solid;
-}
-#btneditpass{
-    width: 10%;
-    height: 5%;
-    margin-left: 5px;
-    font-size: 1vw;
-    justify-content: center;
-    background-color: #536A74;
-    color: white;
-    outline: none;
-    text-decoration: none;
-    border-style: solid;
-}
-#btnedit:hover,#btneditpass:hover{
-    opacity: 0.8;
-}
-#span{
-    font-size: 2vw;
-    color: white;
-    padding-left: 20px;
-}
-#logout{
-    width: 3vw;
-    margin-right: 25px;
-    color: white;
-    background: none;
-    outline: none;
-    text-decoration: none;
-    font-size: 1.2vw;
-}
-#spantop{
-    font-size: 2vw;
-}
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
-}
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 60%;
-    height: 60%;
-}
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-#btnformmodal{
-    background-color: #536A74;
-    width: 25%;
-    height: 6%;
-    font-size: 12px;
-    color: white;
-    outline: none;
-    text-decoration: none;
-    border-style: solid;
-}
-.labelinpt{
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    height: 12%;
-}
-#btnformmodal:focus{
-    opacity: 0.8;
-}
-#btnformmodal:hover{
-    opacity: 0.8;
-}
-#inptuser{
-    width: 100%;
-    height: 100%;
-}
-#spaninp{
-    align-self: flex-start; 
-    font-size: 13px;
-}
-@media screen and (max-width: 400px) {
-    #btnformmodal{
-        width: 50%;
+@media screen and (min-width: 992px) {
+    .containerRelatorio{
+        width: 600px;
     }
 }
-
