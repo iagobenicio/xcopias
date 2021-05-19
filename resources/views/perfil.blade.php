@@ -24,7 +24,7 @@
             <div>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: white;">inicio</a>
+                    <a class="nav-link" href="{{route('padm')}}" style="color: white;">inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: white;">perfil</a>
@@ -43,8 +43,8 @@
             <span style="font-family: sans-serif; font-size: 24px;">Meus dados</span>
         </div>
         <div class="row" style="padding-left: 10px;">
-            <span style="font-family: sans-serif; font-size: 18px;">nome: <span style="color: #0b6a8d;">administrador</span></span>
-            <span style="font-family: sans-serif; font-size: 18px;">usuário: <span style="color: #0b6a8d;">adminteste</span></span>
+            <span style="font-family: sans-serif; font-size: 18px;">nome: <span style="color: #0b6a8d;">{{Auth::user()->name}}</span></span>
+            <span style="font-family: sans-serif; font-size: 18px;">usuário: <span style="color: #0b6a8d;">{{Auth::user()->user}}</span></span>
         </div>
         <div class="row">
             <span style="font-family: sans-serif; font-size: 24px;">Formulários de edição</span>
@@ -55,11 +55,14 @@
                 <form>
                     <div class="form-group">
                       <label for="exampleInputName">nome</label>
-                      <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="novo nome...">
+                      <input type="text" name="nomeuseredit" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="novo nome...">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputUsername">nome de usuário</label>
-                      <input type="text" class="form-control" id="exampleInputUsername" placeholder="novo nome de usuário...">
+                      <input type="text" name="usernameedit" class="form-control" id="exampleInputUsername" placeholder="novo nome de usuário...">
+                    </div>
+                    <div style="display: flex; justify-content: center;"> 
+                      <span id="msgedituser" style="display: none;"></span>
                     </div>
                     <button  id="idsubmit" class="btn btn-primary">alterar</button>
                   </form>
@@ -70,20 +73,83 @@
                 <form>
                     <div class="form-group">
                       <label for="exampleInputName">senha atual</label>
-                      <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="senha atual...">
+                      <input type="text" name="passatual" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="senha atual...">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputUsername">nova senha</label>
-                      <input type="text" class="form-control" id="exampleInputUsername" placeholder="novo senha...">
+                      <input type="text" name="newuserpass" class="form-control" id="exampleInputUsername" placeholder="novo senha...">
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                      <span id="msgedituserpass" style="display: none;"></span>
                     </div>
                     <button  id="idsubmit" class="btn btn-primary">alterar</button>
-                    <div>
-                      <span style="color: red; display: none;"></span>
-                      <span style="color: green; display: none;"></span>
-                    </div>
                   </form>
             </div>
         </div>
     </div>
+    <script>
+        function sendedituser(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            data = {
+                nome: $("input[name=nomeuseredit]").val(),
+                username: $("input[name=usernameedit]").val(),
+            },
+            $.ajax({
+                type: "POST",
+                url: "{{route('userinfo')}}",
+                data: data,
+                success: function(response) {
+                    if(response["msgnotok"]){
+                        document.getElementById("msgedituser").style.color = "red";
+                        document.getElementById("msgedituser").style.display = 'block';
+                        document.getElementById("msgedituser").innerText = response["msgnotok"];
+                    }
+                    else{
+                        document.getElementById("msgedituser").style.color = "green";
+                        document.getElementById("msgedituser").style.display = 'block';
+                        document.getElementById("msgedituser").innerText = "alterações salvas";
+                    }
+                },
+                error: (e) => {
+                    alert('Erro no processo');
+                },
+            });
+        }
+        function sendeditpass(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            data = {
+                pass: $("input[name=passatual]").val(),
+                newpass: $("input[name=newuserpass]").val(),
+            },
+            $.ajax({
+                type: "POST",
+                url: "{{route('userpass')}}",
+                data: data,
+                success: function(response) {
+                    if(response["msgnotok"]){
+                        document.getElementById("msgedituserpass").style.color = "red";
+                        document.getElementById("msgedituserpass").style.display = 'block';
+                        document.getElementById("msgedituserpass").innerText = response["msgnotok"];
+                    }
+                    else{
+                        document.getElementById("msgedituserpass").style.color = "green";
+                        document.getElementById("msgedituserpass").style.display = 'block';
+                        document.getElementById("msgedituserpass").innerText = "senha alterada";
+                    }
+                },
+                error: (e) => {
+                    alert('Erro no processo');
+                },
+            });
+        }
+    </script>
 </body>
 </html>
