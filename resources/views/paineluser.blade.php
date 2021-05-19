@@ -27,7 +27,7 @@
                     <a class="nav-link" style="color: white;">inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: white;">perfil</a>
+                    <a class="nav-link" href="/perfil" style="color: white;">perfil</a>
                 </li>
             </ul>
             </div>

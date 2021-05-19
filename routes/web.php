@@ -22,6 +22,7 @@ Route::post('/checklogin',[LoginController::class,'checkcreden']);
 
 Route::get('/painel',[LoginController::class,'getpainel'])->middleware('auth')->middleware('verifiadm')->name('padm');
 Route::get('/paineluser',[LoginController::class,'getpaineluser'])->middleware('auth')->name('puser');
+Route::get('/perfil',[LoginController::class,'getperfil'])->middleware('auth');
 Route::get('/logout',[LoginController::class,'logout'])->middleware('auth');
 
 Route::post('/caduser',[UserController::class,'cadUser'])->middleware('auth')->middleware('verifiadm')->name('cduser');

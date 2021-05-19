@@ -48,10 +48,8 @@ class LoginController extends Controller
     public function getpaineluser(){
         return view('paineluser');
     }
-    /*
-    public function getuserpainel(){
-
+    public function getperfil(){
+        return view('perfil');
     }
-    */
 
 }
