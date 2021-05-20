@@ -119,33 +119,17 @@
                         </div>
                     </div>
                     <div class="container" style="margin-top: 5%; display:block;">
+                        @foreach($registro as $data)
                         <div class="row">
-                            <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                            <span style="font-family: sans-serif;">{{date('d/m/Y -- H:i:s', strtotime($data->created_at))}}</span>
                             <div class="row" style="margin-left: 5%;">
-                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retirada de cópias</span></span>
-                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
-                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">14</span></span>
+                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">{{$data->action}}</span></span>
+                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">{{$data->user}}</span></span>
+                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">{{$data->quant}}</span></span>
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                            <div class="row" style="margin-left: 5%;">
-                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retornada de cópias </span></span>
-                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
-                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">4</span></span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                            <div class="row" style="margin-left: 5%;">
-                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Renovação de cópias</span></span>
-                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
-                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">20</span></span>
-                            </div>
-                        </div>
-                        <hr>
+                        @endforeach
                     </div>
                 </div>
             </div>

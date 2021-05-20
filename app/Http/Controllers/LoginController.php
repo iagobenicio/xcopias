@@ -43,7 +43,8 @@ class LoginController extends Controller
     }
     public function getpainel(){
         $users = DB::table('users')->where('type',2)->get(['id','name','copiasmes','copiasrestante']);
-        return view('painel',['usuarios' => $users]);
+        $relatorio = DB::table('relatorios')->get(['action','user','quant','created_at']);
+        return view('painel',['usuarios' => $users,'registro' => $relatorio]);
     }
     public function getpaineluser(){
         return view('paineluser');
