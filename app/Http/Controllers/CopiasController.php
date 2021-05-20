@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Relatorio;
+use Illuminate\Support\Facades\DB;
 
 class CopiasController extends Controller
 {
     public function renovarCp(Request $req){
         $datas = $req->all();
         $user = User::find($datas['id']);
-        
+
         if(is_numeric($datas['quantidade'])){
             $user->copiasmes = $datas['quantidade'];
             $user->copiasrestante = $datas['quantidade'];
@@ -47,9 +49,24 @@ class CopiasController extends Controller
         if(is_numeric($datas['quantidade'])){
             
             if($datas['quantidade'] > 0 && $user->copiasrestante >= $datas['quantidade']){
-                $newquant = $user->copiasrestante - $datas['quantidade'];
-                $user->copiasrestante = $newquant;
-                $user->save();
+
+                try {
+                    DB::beginTransaction();
+                    $newquant = $user->copiasrestante - $datas['quantidade'];
+                    $user->copiasrestante = $newquant;
+                    $user->save();
+
+                    $registro = new Relatorio();
+                    $registro->action = "Retirada de cópias";
+                    $registro->user = $user->name;
+                    $registro->quant  = $datas['quantidade'];
+                    $registro->userid = $user->id;
+                    $registro->save();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+                }
+
             }else{
                 return response()->json(['msgnotok' => 'quantidade inválida']);
             }

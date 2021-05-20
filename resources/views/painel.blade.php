@@ -28,7 +28,7 @@
                         <a class="nav-link" style="color: white;">inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: white;">perfil</a>
+                        <a class="nav-link" href="/perfil" style="color: white;">perfil</a>
                     </li>
                 </ul>
             </div>
@@ -57,9 +57,9 @@
                     <span>Cópias restante: <span style="color: #0b6a8d;">{{$user->copiasrestante}}</span></span>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" onclick="retirarcopias({{$user->id}})" class="btn btn-outline-dark" >retirar</button>
+                    <button type="button" onclick="retirarcopias({{$user->id}})"  class="btn btn-outline-dark" >retirar</button>
                     <button type="button" onclick="retornarcopias({{$user->id}})" class="btn btn-outline-dark">retornar</button>
-                    <button type="button" onclick="renovarcopias({{$user->id}})" class="btn btn-outline-dark">renovar</button>
+                    <button type="button" onclick="renovarcopias({{$user->id}})"  class="btn btn-outline-dark">renovar</button>
                 </div>
             </div>
             @endforeach
@@ -106,43 +106,48 @@
     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Relatório</h5>
-                <button id="modalCloserela" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container" style="margin-top: 5%;">
-                    <div class="row">
-                        <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                        <div class="row" style="margin-left: 5%;">
-                            <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;"> Retirada de cópias </span></span>
-                            <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
-                            <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">14</span></span>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Relatório</h5>
+                    <button id="modalCloserela" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center" style="display:none">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                    <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                    <div class="row" style="margin-left: 5%;">
-                        <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retornada de cópias </span></span>
-                        <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
-                        <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">4</span></span>
+                    <div class="container" style="margin-top: 5%; display:block;">
+                        <div class="row">
+                            <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                            <div class="row" style="margin-left: 5%;">
+                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retirada de cópias</span></span>
+                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
+                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">14</span></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                            <div class="row" style="margin-left: 5%;">
+                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retornada de cópias </span></span>
+                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
+                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">4</span></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                            <div class="row" style="margin-left: 5%;">
+                                <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Renovação de cópias</span></span>
+                                <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
+                                <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">20</span></span>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                    <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                    <div class="row" style="margin-left: 5%;">
-                        <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Renovação de cópias</span></span>
-                        <span style="font-family: sans-serif;">Usuário - <span style="color: #0b6a8d;">Professor X</span></span>
-                        <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">20</span></span>
-                    </div>
-                    </div>
-                    <hr>
                 </div>
-            </div>
             </div>
         </div>
     </div>
