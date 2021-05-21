@@ -21,7 +21,7 @@ class CopiasController extends Controller
                 $user->save();
 
                 $registro = new Relatorio();
-                $registro->action = "Retornada de cópias";
+                $registro->action = "Renovação de cópias";
                 $registro->user = $user->name;
                 $registro->quant = $datas['quantidade'];
                 $registro->userid = $user->id;
