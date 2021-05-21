@@ -42,40 +42,25 @@
             <span style="font-family: sans-serif; font-size: 24px;">Minhas cópias</span>
         </div>
         <div class="row" style="padding-left: 10px;">
-            <span style="font-family: sans-serif; font-size: 18px;">Cópias mensal: <span style="color: #0b6a8d;">20</span></span>
-            <span style="font-family: sans-serif; font-size: 18px;">Cópias restantes: <span style="color: #0b6a8d;">14</span></span>
+            <span style="font-family: sans-serif; font-size: 18px;">Cópias mensal: <span style="color: #0b6a8d;">{{Auth::user()->copiasmes}}</span></span>
+            <span style="font-family: sans-serif; font-size: 18px;">Cópias restantes: <span style="color: #0b6a8d;">{{Auth::user()->copiasrestante}}</span></span>
         </div>
         <div class="row">
             <span style="font-family: sans-serif; font-size: 24px;">Relatório</span>
         </div>
         
         <div class="containerRelatorio">
+            @foreach($registro as $data)
             <div class="row">
-                <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
+                <span style="font-family: sans-serif;">{{date('d/m/Y -- H:i:s', strtotime($data->created_at))}}</span>
                 <div class="row" style="margin-left: 2%;">
-                    <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;"> Retirada de cópias </span></span>
-                    <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">14</span></span>
+                    <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">{{$data->action}}</span></span>
+                    <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">{{$data->quant}}</span></span>
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                <div class="row" style="margin-left: 2%;">
-                    <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Retornada de cópias </span></span>
-                    <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">4</span></span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <span style="font-family: sans-serif;">17/05/2021 - 20:00 h</span>
-                <div class="row" style="margin-left: 2%;">
-                    <span style="font-family: sans-serif;">Ação - <span style="color: #0b6a8d;">Renovação de cópias</span></span>
-                    <span style="font-family: sans-serif;">Quantidade - <span style="color: #0b6a8d;">20</span></span>
-                </div>
-            </div>
-            <hr>
+            @endforeach
         </div>
-                  
     </div>
 </body>
 </html>
